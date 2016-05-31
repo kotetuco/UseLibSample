@@ -7,12 +7,26 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
+
+    @IBOutlet weak var reactiveTextField: UITextField!
+    @IBOutlet weak var sampleLabel: UILabel!
+
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        reactiveTextField.rx_text
+            .map{
+                "Out:\($0)"
+            }
+            .bindTo(sampleLabel.rx_text)
+            .addDisposableTo(disposeBag)
     }
 
     override func didReceiveMemoryWarning() {
